@@ -316,7 +316,7 @@ def emcee_lightcurve_estimator(t, lc1, e1, output_tag,
   print ''
   print 'Likelihood value for this solution: %1.5e'%(kelly_ll([mc_sigma[0],mc_log10_tau[0],mc_avg_mag[0]], t, lc1, e1))
   print 'Reduced chisq value for this solution: %1.5e'%(kelly_chisq([mc_sigma[0],mc_log10_tau[0],mc_avg_mag[0]], t, lc1, e1)/float(len(t)))
-  chain_fnm_string = outputdir+'chain_samples_%s'%(output_tag)
+  chain_fnm_string = outputdir+'%s_chain_samples'%(output_tag)
   print 'saving emcee sample chain in %s'%chain_fnm_string
   #np.savez(outputdir+'chain_samples_%s'%(output_tag), sampler.chain[:, 0:, :].reshape((-1, ndim)))
   np.savez(chain_fnm_string, sampler.chain[:, 0:, :].reshape((-1, ndim)))
@@ -568,7 +568,7 @@ def emcee_delay_estimator(t, lc1, e1, lc2, e2, output_tag,
   print 'Likelihood value for this solution: %1.5e'%(kelly_delay_ll(theta_best, t, lc1, e1, lc2, e2))
   print 'Reduced chisq value for this solution: %1.5e'%(kelly_delay_chisq(theta_best, t, lc1, e1, lc2, e2)/float(len(t)))
   
-  chain_fnm_string = outputdir+'chain_samples_%s'%(output_tag)
+  chain_fnm_string = outputdir+'%s_chain_samples'%(output_tag)
   print 'saving emcee sample chain in %s'%chain_fnm_string
   #np.savez(outputdir+'chain_samples_%s'%(output_tag), sampler.chain[:, 0:, :].reshape((-1, ndim)))
   np.savez(chain_fnm_string, sampler.chain[:, 0:, :].reshape((-1, ndim)))

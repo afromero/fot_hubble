@@ -63,7 +63,7 @@ if __name__ == "__main__":
     import datetime
     t0 = datetime.datetime.now()
     #date_string = t0.strftime("_%Y_%m_%d_%H:%M")
-    numpy.savez(args.outputdir+'sim_data_%s'%(args.output_tag), time_array=time_array, mag1=mag1, mag2=mag2, mag1_dat=mag1_dat, mag2_dat=mag2_dat)
+    numpy.savez(args.outputdir+'%s_sim_data'%(args.output_tag), time_array=time_array, mag1=mag1, mag2=mag2, mag1_dat=mag1_dat, mag2_dat=mag2_dat)
     
     emcee_delay_estimator(time_array, mag1_dat,err1,mag2_dat,err2,args.output_tag, 
 			  args.delay_prior,    args.delay_prior_min,    args.delay_prior_max,
