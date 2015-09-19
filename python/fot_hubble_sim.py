@@ -34,11 +34,17 @@ if __name__ == "__main__":
     parser.add_argument("-n",      "--numorbits",           help="Number of Hubble orbits to be used",type=int)
     parser.add_argument("-p",      "--photometric_error",   help="Photometric error uncertainty (e.g. 0.02) [mag]",type=float)
     parser.add_argument("-o",      "--output_tag",          help="Output tag, in quotes",type=str)
+    parser.add_argument("-od",     "--outputdir",           help="Output directory, in quotes",type=str, default = './')
     #KLUDGE TO GET ARGPARSE TO READ NEGATIVE VALUES
     for i, arg in enumerate(sys.argv):
       if (arg[0] == '-') and arg[1].isdigit(): sys.argv[i] = ' ' + arg
     #PAESE ARGUMENTS
     args=parser.parse_args()
+
+    # ensure the output director ends with '/' to keep the format consisent.
+    if(args.outputdir[-1]!='/'):
+		args.outputdir = args.outputdir+'/'
+
     #Nsteps is a simulation parameter. It is recommended to leave it at 1000.
     Nsteps=1000
     print ''
@@ -56,16 +62,16 @@ if __name__ == "__main__":
     import numpy
     import datetime
     t0 = datetime.datetime.now()
-    date_string = t0.strftime("_%Y_%m_%d_%H:%M")
-    outputdir=os.environ['FOTDIR']+'/outputs/'
-    numpy.savez(outputdir+'sim_data_%s%s'%(args.output_tag,date_string), time_array=time_array, mag1=mag1, mag2=mag2, mag1_dat=mag1_dat, mag2_dat=mag2_dat)
+    #date_string = t0.strftime("_%Y_%m_%d_%H:%M")
+    numpy.savez(args.outputdir+'sim_data_%s'%(args.output_tag), time_array=time_array, mag1=mag1, mag2=mag2, mag1_dat=mag1_dat, mag2_dat=mag2_dat)
     
     emcee_delay_estimator(time_array, mag1_dat,err1,mag2_dat,err2,args.output_tag, 
 			  args.delay_prior,    args.delay_prior_min,    args.delay_prior_max,
 			  args.delta_mag_prior, args.delta_mag_prior_min, args.delta_mag_prior_max, 
 			  args.sigma_prior,    args.sigma_prior_min,    args.sigma_prior_max, 
 			  args.tau_prior,      args.tau_prior_min,      args.tau_prior_max, 
-			  args.avg_mag_prior,   args.avg_mag_prior_min,   args.avg_mag_prior_max)
+			  args.avg_mag_prior,   args.avg_mag_prior_min,   args.avg_mag_prior_max, 
+			  outputdir = args.outputdir)
     #show()
 
     
