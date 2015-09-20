@@ -127,7 +127,7 @@ def kelly_ll(theta, time_array, flux_array, ph_err_array):
   t=time_array
   x_hat, err = kelly_estimates(theta, time_array, flux_array, ph_err_array)
   x_star=x-avg_mag
-  ll = np.sum( -((x_hat-x_star)**2 / (err**2)) - np.log(2*np.pi*(err**2))) 
+  ll = -0.5 * np.sum( ((x_hat-x_star)**2 / (err**2)) + np.log(2*np.pi*(err**2))) 
   return ll
 
 def hojjati_ll(time_array, flux_array, ph_err_array, sig, tau, b):
@@ -287,7 +287,8 @@ def emcee_lightcurve_estimator(t, lc1, e1, output_tag,
   ylabel('magnitude')
   legend(loc=1)
 
-    
+  if(outputdir[-1]!='/'):
+	outputdir = outputdir+'/'        
   fig.savefig(outputdir+"burn_in_triangle_%s.png"%(output_tag))
   
 
@@ -508,7 +509,8 @@ def emcee_delay_estimator(t, lc1, e1, lc2, e2, output_tag,
   ylabel('magnitude')
   legend(loc=1)
 
-    
+  if(outputdir[-1]!='/'):
+	outputdir = outputdir+'/'        
   fig.savefig(outputdir+"burn_in_triangle_%s.png"%(output_tag))
   print outputdir+"burn_in_triangle_%s.png"%(output_tag)
 
